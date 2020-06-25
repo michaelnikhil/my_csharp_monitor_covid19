@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Net;
 
@@ -16,8 +18,6 @@ namespace DataProcessing {
 
         }
 
-
-
         public void DownloadPopulation() {
 
             try {
@@ -27,9 +27,11 @@ namespace DataProcessing {
                 success = true;
                 output = status.ToString();
 
-                var stream = new StreamReader(response.GetResponseStream());
-                Readtext(stream);
-                stream.Close();
+                // The using statement also closes the StreamReader
+                using (StreamReader stream = new StreamReader(response.GetResponseStream())) {
+                    Readtext(stream);
+                }
+
             } catch (WebException ex) {
                 output = ex.Message;
                 return;
@@ -37,18 +39,15 @@ namespace DataProcessing {
         }
 
         public void Readtext(StreamReader str) {
-
-            while (!str.EndOfStream) {
-                string line = str.ReadLine();
-                if (!String.IsNullOrWhiteSpace(line)) {
-                    string[] val = line.Split(',');
-                    //col7: country, col11: population
-                    if (!lastValue.ContainsKey(val[7])) {
-                        lastValue.Add(val[7], val[11]);
+            
+            using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
+                var records = csv.GetRecords<Country>();
+                foreach  (var record in records) {
+                    if (!lastValue.ContainsKey(record.Country_Region)) {
+                        lastValue.Add(record.Country_Region,record.Population);
                     }
                 }
             }
-
         }
 
     }

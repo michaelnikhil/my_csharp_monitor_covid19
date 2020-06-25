@@ -29,6 +29,8 @@ namespace WindowsFormsApp1 {
             dataGridView1.Columns.Add("Country", "Country");
             dataGridView1.Columns.Add("Population", "Population");
 
+            MessageBox.Show(loader.output);
+
             foreach (string item in loader.lastValue.Keys) {
                 dataGridView1.Rows.Add(new object[] { item, loader.lastValue[item] });
             }
