@@ -11,6 +11,8 @@ namespace DataProcessing {
         public string Country_Region { get; set; }
         public string Population { get; set; }
 
+// public List<int> timeSeries;
+
         public void Nvalues() { }
 
     }

@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -8,14 +9,32 @@ using System.Net;
 
 namespace DataProcessing {
     public class LoadData {
+
+        public List<DateTime> dates = new List<DateTime> { };
         public string url;
         public string output;
+        public List<string> l_output = new List<string> { };
         public bool success = false;
         public string data;
         public Hashtable lastValue = new Hashtable();
 
         public void DownloadCovid() {
+            try {
+                var request = WebRequest.Create(url) as HttpWebRequest;
+                var response = request.GetResponse() as HttpWebResponse;
+                var status = response.StatusCode; //returns OK if a response is received
+                success = true;
+                output = status.ToString();
 
+                // The using statement also closes the StreamReader
+                using (StreamReader stream = new StreamReader(response.GetResponseStream())) {
+                    ReadTimeSeries(stream);
+                }
+
+            } catch (WebException ex) {
+                output = ex.Message;
+                return;
+            }
         }
 
         public void DownloadPopulation() {
@@ -29,7 +48,7 @@ namespace DataProcessing {
 
                 // The using statement also closes the StreamReader
                 using (StreamReader stream = new StreamReader(response.GetResponseStream())) {
-                    Readtext(stream);
+                    ReadPopulation(stream);
                 }
 
             } catch (WebException ex) {
@@ -37,11 +56,12 @@ namespace DataProcessing {
                 return;
             }
         }
-
-        public void Readtext(StreamReader str) {
-            
+        
+        public void ReadPopulation(StreamReader str) {
+            //read data and map the columns against the Country class
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
                 var records = csv.GetRecords<Country>();
+                
                 foreach  (var record in records) {
                     if (!lastValue.ContainsKey(record.Country_Region)) {
                         lastValue.Add(record.Country_Region,record.Population);
@@ -49,6 +69,25 @@ namespace DataProcessing {
                 }
             }
         }
-
+        public void ReadTimeSeries(StreamReader str) {
+            //read data and map the columns against the Country class
+            using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
+                csv.Read();
+                csv.ReadHeader();
+                CultureInfo culture = new CultureInfo("en-US");
+                culture.Calendar.TwoDigitYearMax = 2099;
+                string[] headerRow = csv.Context.HeaderRecord;
+                foreach (string item in headerRow) {
+                    if (DateTime.TryParse(item, culture,
+                        DateTimeStyles.None,
+                        out DateTime date)) {
+                        dates.Add(date);
+                    }
+                            
+                    l_output.Add(item);
+                    output += item + "\t";
+                }
+            }
+        }
     }
 }
