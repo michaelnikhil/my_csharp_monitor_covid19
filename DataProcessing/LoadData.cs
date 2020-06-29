@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
-
+using System.Linq;
 
 namespace DataProcessing {
     public class LoadData {
@@ -17,6 +17,7 @@ namespace DataProcessing {
         public bool success = false;
         public string data;
         public Hashtable lastValue = new Hashtable();
+        public Dictionary<string, Country> dictCountry = new Dictionary<string, Country> { }; 
 
         public void DownloadCovid() {
             try {
@@ -63,15 +64,20 @@ namespace DataProcessing {
                 var records = csv.GetRecords<Country>();
                 
                 foreach  (var record in records) {
+                    if (!dictCountry.ContainsKey(record.Country_Region)){
+                        dictCountry.Add(record.Country_Region, record);
+                    }
+
                     if (!lastValue.ContainsKey(record.Country_Region)) {
-                        lastValue.Add(record.Country_Region,record.Population);
+                        lastValue.Add(record.Country_Region,record.Population.ToString());
                     }
                 }
             }
         }
         public void ReadTimeSeries(StreamReader str) {
-            //read data and map the columns against the Country class
+
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
+                //read header to collect the dates
                 csv.Read();
                 csv.ReadHeader();
                 CultureInfo culture = new CultureInfo("en-US");
@@ -82,12 +88,20 @@ namespace DataProcessing {
                         DateTimeStyles.None,
                         out DateTime date)) {
                         dates.Add(date);
-                    }
-                            
-                    l_output.Add(item);
-                    output += item + "\t";
+                    }                           
                 }
             }
         }
+
+        public static List<string> OrderVal (Dictionary<string, Country> dict) {
+            var orderedList = (from entry in dict
+                               where (!String.IsNullOrEmpty((entry.Value.Population)))
+                               orderby 
+                               (Convert.ToInt32( entry.Value.Population)) descending
+                               select entry.Key).Take(10).ToList<string>();
+            return orderedList;
+        }
+
+
     }
 }
