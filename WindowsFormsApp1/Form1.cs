@@ -25,19 +25,6 @@ namespace WindowsFormsApp1 {
                 MessageBox.Show(loader.output);
             }
 
-            dataGridView1.DataSource = null;
-            dataGridView1.Columns.Add("Country", "Country");
-            dataGridView1.Columns.Add("Population", "Population");
-
-           // MessageBox.Show(loader.output);
-
-
-
-            foreach (string item in loader.dictCountry.Keys) {
-                Country cc = loader.dictCountry[item];
-                dataGridView1.Rows.Add(new object[] { item, cc.Population });
-            }
-
             loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
            
            loader.DownloadCovid();
@@ -45,14 +32,42 @@ namespace WindowsFormsApp1 {
                 MessageBox.Show(loader.output);
             }
 
-            foreach (var item in loader.dates) {
+
+            dataGridView1.DataSource = null;
+            dataGridView1.Columns.Add("Country", "Country");
+            dataGridView1.Columns.Add("Population", "Population");
+            dataGridView1.Columns.Add("Deaths", "Deaths");
+
+            // MessageBox.Show(loader.output);
+
+
+
+            foreach (string item in loader.dictCountry.Keys) {
+                Country cc = loader.dictCountry[item];
+                dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentDeaths });
+            }
+
+
+            /*   foreach (var item in loader.dates) {
+                   listBox1.Items.Add(item);
+               }*/
+
+            /* foreach (var item in loader.l_output) {
+                 listBox1.Items.Add(item);
+             }*/
+
+            foreach (var item in loader.l_output) {
                 listBox1.Items.Add(item);
             }
 
-               List<string> orderCountries = LoadData.OrderVal(loader.dictCountry);
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry);
                foreach (var item in orderCountries) {
                    listBox2.Items.Add(item);
                }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+
         }
     }
 }

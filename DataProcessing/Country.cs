@@ -10,12 +10,9 @@ namespace DataProcessing {
 
         public string Country_Region { get; set; }
         public string Population { get; set; }
-        
-        public int nPopulation() {
-            return Int32.Parse(Population);
-        }
-
-// public List<int> timeSeries;
+        public int CurrentConfirmedCases { get; set; };
+        public int CurrentDeaths { get; set; }
+        public List<int> timeSeries;
 
         public void Nvalues() { }
 

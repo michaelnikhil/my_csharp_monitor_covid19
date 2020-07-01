@@ -61,6 +61,8 @@ namespace DataProcessing {
         public void ReadPopulation(StreamReader str) {
             //read data and map the columns against the Country class
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
+                csv.Configuration.HeaderValidated = null;
+                csv.Configuration.MissingFieldFound = null;
                 var records = csv.GetRecords<Country>();
                 
                 foreach  (var record in records) {
@@ -75,9 +77,10 @@ namespace DataProcessing {
             }
         }
         public void ReadTimeSeries(StreamReader str) {
+            //TODO : refactor code to download the dates only once
 
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
-                //read header to collect the dates
+                //1. read header to collect the dates
                 csv.Read();
                 csv.ReadHeader();
                 CultureInfo culture = new CultureInfo("en-US");
@@ -89,6 +92,20 @@ namespace DataProcessing {
                         out DateTime date)) {
                         dates.Add(date);
                     }                           
+                }
+                //2. add missing data to the dictCountry = the last column of the table
+                //last column points to teh current day
+
+                while (csv.Read()) {
+                    //string deaths = csv.GetField(headerRow.Last());
+                    string deaths = csv.GetField(headerRow.Last());
+                    string str_count = csv.GetField("Country/Region");
+                    //l_output.Add(deaths);
+                    if (dictCountry.ContainsKey(str_count)) {
+                        //sum all values corresponding to the same country
+                        dictCountry[str_count].CurrentDeaths += Convert.ToInt32(deaths); 
+                        l_output.Add(dictCountry[str_count].Country_Region  );
+                    }
                 }
             }
         }
