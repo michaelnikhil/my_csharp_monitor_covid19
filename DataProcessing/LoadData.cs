@@ -124,6 +124,7 @@ namespace DataProcessing {
         }
 
         public static List<string> OrderVal (Dictionary<string, Country> dict,int rank) {
+            //TODO : add a parameter to order by polpulation, or death etc..
             var orderedList = (from entry in dict
                                where (!String.IsNullOrEmpty((entry.Value.Population)))
                                orderby 

@@ -18,11 +18,13 @@ namespace WindowsFormsApp1 {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            LoadData loader = new LoadData();
 
+            //create an instance of the loaddata class
+            LoadData loader = new LoadData();
 
             loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv";
             loader.DownloadPopulation();
+
             if (!loader.success) {
                 MessageBox.Show(loader.output);
             }
@@ -41,11 +43,11 @@ namespace WindowsFormsApp1 {
 
             // MessageBox.Show(loader.output);
 
-            //System.Diagnostics.Debug.WriteLine("test");
+
             foreach (string item in loader.dictCountry.Keys) {
                 Country cc = loader.dictCountry[item];
                 dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentDeaths });
-              //  System.Diagnostics.Debug.WriteLine(item);
+               // System.Diagnostics.Debug.Write("\"" + item + "\",");
             }
 
             /*   foreach (var item in loader.dates) {
