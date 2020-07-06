@@ -19,6 +19,19 @@ namespace DataProcessing {
         public Hashtable lastValue = new Hashtable();
         public Dictionary<string, Country> dictCountry = new Dictionary<string, Country> { }; 
 
+      /*  public HttpWebResponse SendRequest(url) {
+            try {
+                var request = WebRequest.Create(url) as HttpWebRequest;
+                var response = request.GetResponse() as HttpWebResponse;
+                return response;
+            } catch (WebException ex) {
+                output = ex.Message;
+                HttpWebResponse noresponse = n
+            }
+            return HttpWebResponse;
+
+        }*/
+
         public void DownloadCovid() {
             try {
                 var request = WebRequest.Create(url) as HttpWebRequest;
@@ -110,12 +123,12 @@ namespace DataProcessing {
             }
         }
 
-        public static List<string> OrderVal (Dictionary<string, Country> dict) {
+        public static List<string> OrderVal (Dictionary<string, Country> dict,int rank) {
             var orderedList = (from entry in dict
                                where (!String.IsNullOrEmpty((entry.Value.Population)))
                                orderby 
                                (Convert.ToInt32( entry.Value.Population)) descending
-                               select entry.Key).Take(10).ToList<string>();
+                               select entry.Key) .Take(rank).ToList<string>();
             return orderedList;
         }
 

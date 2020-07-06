@@ -10,7 +10,7 @@ namespace DataProcessing {
 
         public string Country_Region { get; set; }
         public string Population { get; set; }
-        public int CurrentConfirmedCases { get; set; };
+        public int CurrentConfirmedCases { get; set; }
         public int CurrentDeaths { get; set; }
         public List<int> timeSeries;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using DataProcessing;
 
 namespace WindowsFormsApp1 {
@@ -32,7 +34,6 @@ namespace WindowsFormsApp1 {
                 MessageBox.Show(loader.output);
             }
 
-
             dataGridView1.DataSource = null;
             dataGridView1.Columns.Add("Country", "Country");
             dataGridView1.Columns.Add("Population", "Population");
@@ -40,13 +41,12 @@ namespace WindowsFormsApp1 {
 
             // MessageBox.Show(loader.output);
 
-
-
+            //System.Diagnostics.Debug.WriteLine("test");
             foreach (string item in loader.dictCountry.Keys) {
                 Country cc = loader.dictCountry[item];
                 dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentDeaths });
+              //  System.Diagnostics.Debug.WriteLine(item);
             }
-
 
             /*   foreach (var item in loader.dates) {
                    listBox1.Items.Add(item);
@@ -60,14 +60,27 @@ namespace WindowsFormsApp1 {
                 listBox1.Items.Add(item);
             }
 
-            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry);
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,10);
                foreach (var item in orderCountries) {
                    listBox2.Items.Add(item);
                }
-        }
-
-        private void button2_Click(object sender, EventArgs e) {
+            drawChart(loader.dictCountry,orderCountries);
 
         }
+
+        private void drawChart(Dictionary<string, Country> dict, List<string> listCountries) {
+
+            Series ser1 = new Series("My Series", 10);
+            chart1.Series.Add(ser1);
+
+            foreach (string item in listCountries) {
+                Country cc = dict[item];
+                chart1.Series["My Series"].Points.AddXY(item, cc.Population);
+
+            }
+        }
+
+
+
     }
 }
