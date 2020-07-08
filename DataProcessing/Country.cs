@@ -17,4 +17,10 @@ namespace DataProcessing {
         public void Nvalues() { }
 
     }
+
+    public enum MyOrderBy {
+        Population,
+        CurrentConfirmedCases,
+        CurrentDeaths
+    }
 }

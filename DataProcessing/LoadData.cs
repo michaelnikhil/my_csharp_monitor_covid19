@@ -123,13 +123,28 @@ namespace DataProcessing {
             }
         }
 
-        public static List<string> OrderVal (Dictionary<string, Country> dict,int rank) {
+        public static List<string> OrderVal (Dictionary<string, Country> dict,int rank, MyOrderBy by) {
             //TODO : add a parameter to order by polpulation, or death etc..
-            var orderedList = (from entry in dict
-                               where (!String.IsNullOrEmpty((entry.Value.Population)))
-                               orderby 
-                               (Convert.ToInt32( entry.Value.Population)) descending
-                               select entry.Key) .Take(rank).ToList<string>();
+            List<string> orderedList = new List<string> { };
+            switch (by) {
+                case MyOrderBy.Population:
+                    orderedList = (from entry in dict
+                                       where (!String.IsNullOrEmpty((entry.Value.Population)))
+                                       orderby
+                                       (Convert.ToInt32(entry.Value.Population)) descending
+                                       select entry.Key).Take(rank).ToList<string>();
+                    break;
+                case MyOrderBy.CurrentConfirmedCases:
+
+                    break;
+                case MyOrderBy.CurrentDeaths:
+
+
+                    break;
+                default:
+                    break;
+            }
+
             return orderedList;
         }
 

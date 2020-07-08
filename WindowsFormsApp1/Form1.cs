@@ -62,7 +62,7 @@ namespace WindowsFormsApp1 {
                 listBox1.Items.Add(item);
             }
 
-            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,10);
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,10,MyOrderBy.Population);
                foreach (var item in orderCountries) {
                    listBox2.Items.Add(item);
                }
@@ -72,7 +72,7 @@ namespace WindowsFormsApp1 {
 
         private void drawChart(Dictionary<string, Country> dict, List<string> listCountries) {
 
-            Series ser1 = new Series("My Series", 10);
+            Series ser1 = new Series("My Series");
             chart1.Series.Add(ser1);
 
             foreach (string item in listCountries) {
@@ -81,8 +81,5 @@ namespace WindowsFormsApp1 {
 
             }
         }
-
-
-
     }
 }
