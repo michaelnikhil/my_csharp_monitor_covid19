@@ -98,13 +98,12 @@ namespace DataProcessing {
                 //last column points to teh current day
 
                 while (csv.Read()) {
-                    //string deaths = csv.GetField(headerRow.Last());
-                    string deaths = csv.GetField(headerRow.Last());
+                    string values = csv.GetField(headerRow.Last());
                     string str_count = csv.GetField("Country/Region");
-                    //l_output.Add(deaths);
                     if (dictCountry.ContainsKey(str_count)) {
                         //sum all values corresponding to the same country
-                        dictCountry[str_count].CurrentDeaths += Convert.ToInt32(deaths); 
+                        dictCountry[str_count].CurrentDeaths += Convert.ToInt32(values); 
+
                         l_output.Add(dictCountry[str_count].Country_Region  );
                     }
                 }
