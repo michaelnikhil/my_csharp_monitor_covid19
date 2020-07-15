@@ -51,16 +51,14 @@ namespace WindowsFormsApp1 {
 
          //create an instance of the loaddata class
             LoadData loader = new LoadData();
-
-            loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv";
+           
             loader.DownloadPopulation();
 
             if (!loader.success) {
                 MessageBox.Show(loader.output);
             }
 
-            loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
-           
+
            loader.DownloadCovid();
             if (!loader.success) {
                 MessageBox.Show(loader.output);

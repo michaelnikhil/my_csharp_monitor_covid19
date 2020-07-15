@@ -11,7 +11,6 @@ namespace DataProcessing {
     public class LoadData {
 
         public List<DateTime> dates = new List<DateTime> { };
-        public string url;
         public string output;
         public List<string> l_output = new List<string> { };
         public bool success = false;
@@ -21,6 +20,8 @@ namespace DataProcessing {
 
 
         public void DownloadCovid() {
+
+            string url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
             try {
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 var response = request.GetResponse() as HttpWebResponse;
@@ -41,6 +42,7 @@ namespace DataProcessing {
 
         public void DownloadPopulation() {
 
+            string url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv";
             try {
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 var response = request.GetResponse() as HttpWebResponse;
