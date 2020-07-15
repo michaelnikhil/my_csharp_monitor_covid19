@@ -4,17 +4,18 @@ using System.IO;
 using System.Net;
 using DataProcessing;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace UnitTestProject {
     [TestClass]
     public class UnitTest1 {
-        [TestMethod]
+   
         //this test checks that the list of countries downloaded from github is as expected
+        [TestMethod]
         public void TestReadPopulationFile() {
             //arrange
             LoadData loader = new LoadData();
-
-            loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv";
 
             //act
             loader.DownloadPopulation();
@@ -22,6 +23,7 @@ namespace UnitTestProject {
 
             foreach (string item in loader.dictCountry.Keys) {
                 listActual.Add(item);
+                Debug.Write(item);
             }
 
             // Assert
@@ -31,5 +33,35 @@ namespace UnitTestProject {
             CollectionAssert.AreEqual(listExpected, listActual, "the list of countries has changed");
 
         }
+
+        //parametrised unit test
+        [DataRow(MyFileChoice.CurrentConfirmedCases)]
+        [DataRow(MyFileChoice.CurrentDeaths)]
+
+        [DataTestMethod]
+        public void TestDownloadCovid_GetCurrentDate(MyFileChoice source)
+        {
+            //arrange
+            LoadData loader = new LoadData();
+
+            //act
+            loader.DownloadCovid(source);
+            DateTime lastLoggedDate = loader.dates.Last();
+            DateTime todayDate = DateTime.Now;
+            Debug.WriteLine(lastLoggedDate);
+            Debug.WriteLine(todayDate);
+
+            TimeSpan date_span = (todayDate - lastLoggedDate).Duration();
+
+            // Assert
+            //return true if the last logged day is the current day +/- 2 days
+            bool result = date_span.Days < 2 ? true : false;
+
+            Assert.IsTrue(result, "the date differs by more than 2 days");  
+        }
+
     }
+
+
+
 }
