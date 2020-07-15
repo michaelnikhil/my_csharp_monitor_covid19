@@ -19,9 +19,17 @@ namespace DataProcessing {
         public Dictionary<string, Country> dictCountry = new Dictionary<string, Country> { }; 
 
 
-        public void DownloadCovid() {
+        public void DownloadCovid(MyFileChoice source) {
 
-            string url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
+            string url;
+            if (source == MyFileChoice.CurrentDeaths) {
+                url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv";
+            }
+            else
+            {
+                url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+            }
+
             try {
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 var response = request.GetResponse() as HttpWebResponse;
@@ -31,7 +39,7 @@ namespace DataProcessing {
 
                 // The using statement also closes the StreamReader
                 using (StreamReader stream = new StreamReader(response.GetResponseStream())) {
-                    ReadTimeSeries(stream);
+                    ReadTimeSeries(stream,source);
                 }
 
             } catch (WebException ex) {
@@ -39,6 +47,7 @@ namespace DataProcessing {
                 return;
             }
         }
+
 
         public void DownloadPopulation() {
 
@@ -79,7 +88,7 @@ namespace DataProcessing {
                 }
             }
         }
-        public void ReadTimeSeries(StreamReader str) {
+        public void ReadTimeSeries(StreamReader str, MyFileChoice source) {
             //TODO : refactor code to download the dates only once
 
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
@@ -97,16 +106,36 @@ namespace DataProcessing {
                     }                           
                 }
                 //2. add missing data to the dictCountry = the last column of the table
-                //last column points to teh current day
+                //last column points to the current day
 
-                while (csv.Read()) {
-                    string values = csv.GetField(headerRow.Last());
-                    string str_count = csv.GetField("Country/Region");
-                    if (dictCountry.ContainsKey(str_count)) {
-                        //sum all values corresponding to the same country
-                        dictCountry[str_count].CurrentDeaths += Convert.ToInt32(values); 
+                //change where the data is sent depending on the file
+                if (source == MyFileChoice.CurrentDeaths) {  
+                    while (csv.Read())
+                    {
+                        string values = csv.GetField(headerRow.Last());
+                        string str_count = csv.GetField("Country/Region");
+                        if (dictCountry.ContainsKey(str_count))
+                        {
+                            //sum all values corresponding to the same country
+                            dictCountry[str_count].CurrentDeaths += Convert.ToInt32(values);
 
-                        l_output.Add(dictCountry[str_count].Country_Region  );
+                            l_output.Add(dictCountry[str_count].Country_Region);
+                        }
+                    }
+                }
+                else //confirmedCases
+                {
+                    while (csv.Read())
+                    {
+                        string values = csv.GetField(headerRow.Last());
+                        string str_count = csv.GetField("Country/Region");
+                        if (dictCountry.ContainsKey(str_count))
+                        {
+                            //sum all values corresponding to the same country
+                            dictCountry[str_count].CurrentConfirmedCases += Convert.ToInt32(values);
+
+                            l_output.Add(dictCountry[str_count].Country_Region);
+                        }
                     }
                 }
             }
@@ -135,10 +164,13 @@ namespace DataProcessing {
                 default:
                     break;
             }
-
             return orderedList;
         }
+    }
 
-
+    public enum MyFileChoice
+    {
+        CurrentConfirmedCases,
+        CurrentDeaths
     }
 }

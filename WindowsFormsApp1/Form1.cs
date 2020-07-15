@@ -59,11 +59,17 @@ namespace WindowsFormsApp1 {
             }
 
 
-           loader.DownloadCovid();
+           loader.DownloadCovid(MyFileChoice.CurrentDeaths);
             if (!loader.success) {
                 MessageBox.Show(loader.output);
             }
-        
+
+            loader.DownloadCovid(MyFileChoice.CurrentConfirmedCases);
+            if (!loader.success)
+            {
+                MessageBox.Show(loader.output);
+            }
+
             return loader;
         }
 
