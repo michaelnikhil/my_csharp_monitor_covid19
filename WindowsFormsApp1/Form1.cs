@@ -19,7 +19,33 @@ namespace WindowsFormsApp1 {
 
         private void button1_Click(object sender, EventArgs e) {
 
-            //create an instance of the loaddata class
+
+            //create an instance of the loaddata class and populate it 
+            LoadData loader = LoadAllData();
+
+            dataGridView1.DataSource = null;
+            dataGridView1.Columns.Add("Country", "Country");
+            dataGridView1.Columns.Add("Population", "Population");
+            dataGridView1.Columns.Add("Deaths", "Deaths");
+
+            foreach (string item in loader.dictCountry.Keys) {
+                Country cc = loader.dictCountry[item];
+                dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentDeaths });
+               // System.Diagnostics.Debug.Write("\"" + item + "\",");
+            }
+
+
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,10,MyOrderBy.Population);
+               foreach (var item in orderCountries) {
+                   listBox2.Items.Add(item);
+               }
+            drawChart(loader.dictCountry,orderCountries);
+
+        }
+
+        private LoadData LoadAllData(){
+
+         //create an instance of the loaddata class
             LoadData loader = new LoadData();
 
             loader.url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv";
@@ -35,39 +61,8 @@ namespace WindowsFormsApp1 {
             if (!loader.success) {
                 MessageBox.Show(loader.output);
             }
-
-            dataGridView1.DataSource = null;
-            dataGridView1.Columns.Add("Country", "Country");
-            dataGridView1.Columns.Add("Population", "Population");
-            dataGridView1.Columns.Add("Deaths", "Deaths");
-
-            // MessageBox.Show(loader.output);
-
-
-            foreach (string item in loader.dictCountry.Keys) {
-                Country cc = loader.dictCountry[item];
-                dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentDeaths });
-               // System.Diagnostics.Debug.Write("\"" + item + "\",");
-            }
-
-            /*   foreach (var item in loader.dates) {
-                   listBox1.Items.Add(item);
-               }*/
-
-            /* foreach (var item in loader.l_output) {
-                 listBox1.Items.Add(item);
-             }*/
-
-            foreach (var item in loader.l_output) {
-                listBox1.Items.Add(item);
-            }
-
-            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,10,MyOrderBy.Population);
-               foreach (var item in orderCountries) {
-                   listBox2.Items.Add(item);
-               }
-            drawChart(loader.dictCountry,orderCountries);
-
+        
+            return loader;
         }
 
         private void drawChart(Dictionary<string, Country> dict, List<string> listCountries) {

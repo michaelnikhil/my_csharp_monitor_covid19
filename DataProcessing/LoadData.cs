@@ -19,18 +19,6 @@ namespace DataProcessing {
         public Hashtable lastValue = new Hashtable();
         public Dictionary<string, Country> dictCountry = new Dictionary<string, Country> { }; 
 
-      /*  public HttpWebResponse SendRequest(url) {
-            try {
-                var request = WebRequest.Create(url) as HttpWebRequest;
-                var response = request.GetResponse() as HttpWebResponse;
-                return response;
-            } catch (WebException ex) {
-                output = ex.Message;
-                HttpWebResponse noresponse = n
-            }
-            return HttpWebResponse;
-
-        }*/
 
         public void DownloadCovid() {
             try {
@@ -124,7 +112,6 @@ namespace DataProcessing {
         }
 
         public static List<string> OrderVal (Dictionary<string, Country> dict,int rank, MyOrderBy by) {
-            //TODO : add a parameter to order by polpulation, or death etc..
             List<string> orderedList = new List<string> { };
             switch (by) {
                 case MyOrderBy.Population:
@@ -135,11 +122,14 @@ namespace DataProcessing {
                                        select entry.Key).Take(rank).ToList<string>();
                     break;
                 case MyOrderBy.CurrentConfirmedCases:
-
+                    orderedList = (from entry in dict     
+                                   orderby entry.Value.CurrentConfirmedCases descending                                
+                                   select entry.Key).Take(rank).ToList<string>();
                     break;
                 case MyOrderBy.CurrentDeaths:
-
-
+                    orderedList = (from entry in dict
+                                   orderby entry.Value.CurrentDeaths descending
+                                   select entry.Key).Take(rank).ToList<string>();
                     break;
                 default:
                     break;
