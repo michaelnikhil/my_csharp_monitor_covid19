@@ -23,18 +23,7 @@ namespace WindowsFormsApp1 {
             //create an instance of the loaddata class and populate it 
             LoadData loader = LoadAllData();
 
-            dataGridView1.DataSource = null;
-            dataGridView1.Rows.Clear();
-            dataGridView1.Columns.Add("Country", "Country");
-            dataGridView1.Columns.Add("Population", "Population");
-            dataGridView1.Columns.Add("Confirmed cases", "Confirmed cases");
-            dataGridView1.Columns.Add("Deaths", "Deaths");
-
-            foreach (string item in loader.dictCountry.Keys) {
-                Country cc = loader.dictCountry[item];
-                dataGridView1.Rows.Add(new object[] { item, cc.Population,cc.CurrentConfirmedCases, cc.CurrentDeaths });
-               // System.Diagnostics.Debug.Write("\"" + item + "\",");
-            }
+            populateGridView(loader);
 
             int comboBoxChoice = comboBox1.SelectedIndex;
 
@@ -58,7 +47,6 @@ namespace WindowsFormsApp1 {
                 MessageBox.Show(loader.output);
             }
 
-
            loader.DownloadCovid(MyFileChoice.CurrentDeaths);
             if (!loader.success) {
                 MessageBox.Show(loader.output);
@@ -71,6 +59,23 @@ namespace WindowsFormsApp1 {
             }
 
             return loader;
+        }
+
+        private void populateGridView(LoadData loader)
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = null;
+            dataGridView1.Columns.Add("Country", "Country");
+            dataGridView1.Columns.Add("Population", "Population");
+            dataGridView1.Columns.Add("Confirmed cases", "Confirmed cases");
+            dataGridView1.Columns.Add("Deaths", "Deaths");
+
+            foreach (string item in loader.dictCountry.Keys)
+            {
+                Country cc = loader.dictCountry[item];
+                dataGridView1.Rows.Add(new object[] { item, cc.Population, cc.CurrentConfirmedCases, cc.CurrentDeaths });
+                // System.Diagnostics.Debug.Write("\"" + item + "\",");
+            }
         }
 
         private void drawChart(Dictionary<string, Country> dict, List<string> listCountries, int comboBoxChoice) {
@@ -121,14 +126,5 @@ namespace WindowsFormsApp1 {
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
