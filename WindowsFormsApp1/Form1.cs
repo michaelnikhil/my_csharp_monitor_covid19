@@ -142,14 +142,14 @@ namespace WindowsFormsApp1 {
                 ser1.Name = country;
 
                 chartTimeSeries.Series[country].Points.DataBindY(dict[country].timeSeries);
-
+                chartTimeSeries.Series[country].ChartType = SeriesChartType.Line;
                 //TODO : FIXME
-               /* int i = 0;
-                foreach (int item in dict[country].timeSeries)
-                {
-                    chartTimeSeries.Series[country].Points.AddXY(i, item);
-                    i++;
-                }*/
+                /* int i = 0;
+                 foreach (int item in dict[country].timeSeries)
+                 {
+                     chartTimeSeries.Series[country].Points.AddXY(i, item);
+                     i++;
+                 }*/
             }
         }
 
