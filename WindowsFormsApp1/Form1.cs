@@ -21,7 +21,6 @@ namespace WindowsFormsApp1 {
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             //create an instance of the loaddata class and populate it 
             LoadData loader = LoadAllData();
 
@@ -142,17 +141,17 @@ namespace WindowsFormsApp1 {
                 chartTimeSeries.Series.Add(ser1);
                 ser1.Name = country;
 
+                chartTimeSeries.Series[country].Points.DataBindY(dict[country].timeSeries);
+
                 //TODO : FIXME
-                int i = 0;
+               /* int i = 0;
                 foreach (int item in dict[country].timeSeries)
                 {
                     chartTimeSeries.Series[country].Points.AddXY(i, item);
                     i++;
-                }
+                }*/
             }
-
-
-
         }
+
     }
 }
