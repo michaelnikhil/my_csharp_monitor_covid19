@@ -39,7 +39,7 @@ namespace DataProcessing {
 
                 // The using statement also closes the StreamReader
                 using (StreamReader stream = new StreamReader(response.GetResponseStream())) {
-                    ReadTimeSeries(stream,source);
+                    ReadSingleValues(stream,source);
                 }
 
             } catch (WebException ex) {
@@ -88,38 +88,59 @@ namespace DataProcessing {
                 }
             }
         }
-        public void ReadTimeSeries(StreamReader str, MyFileChoice source) {
+        public void ReadSingleValues(StreamReader str, MyFileChoice source) {
             //TODO : refactor code to download the dates only once
+            //reference list of 0s
+            List<int> tmp_timeSeries = new List<int> { };
 
             using (CsvReader csv = new CsvReader(str, CultureInfo.InvariantCulture)) {
+
                 //1. read header to collect the dates
                 csv.Read();
                 csv.ReadHeader();
                 CultureInfo culture = new CultureInfo("en-US");
                 culture.Calendar.TwoDigitYearMax = 2099;
                 string[] headerRow = csv.Context.HeaderRecord;
+                List<string> headerDates = new List<string> { };
                 foreach (string item in headerRow) {
                     if (DateTime.TryParse(item, culture,
                         DateTimeStyles.None,
                         out DateTime date)) {
                         dates.Add(date);
+                        headerDates.Add(item);
+                        tmp_timeSeries.Add(1);
+                        l_output.Add(item);                        
                     }                           
                 }
+
                 //2. add missing data to the dictCountry = the last column of the table
                 //last column points to the current day
 
                 //change where the data is sent depending on the file
-                if (source == MyFileChoice.CurrentDeaths) {  
+
+
+                if (source == MyFileChoice.CurrentDeaths) {
+
+                    //initialise the time series for each country
+                    foreach (string country in dictCountry.Keys)
+                    {
+                        dictCountry[country].timeSeries = new List<int>(tmp_timeSeries);
+                    }
+
                     while (csv.Read())
                     {
-                        string values = csv.GetField(headerRow.Last());
-                        string str_count = csv.GetField("Country/Region");
-                        if (dictCountry.ContainsKey(str_count))
+                        string value = csv.GetField(headerRow.Last());
+                        string readCountry = csv.GetField("Country/Region");
+                        if (dictCountry.ContainsKey(readCountry))
                         {
-                            //sum all values corresponding to the same country
-                            dictCountry[str_count].CurrentDeaths += Convert.ToInt32(values);
+                            //sum all values corresponding to the same country - last value
+                            dictCountry[readCountry].CurrentDeaths += Convert.ToInt32(value);
 
-                            l_output.Add(dictCountry[str_count].Country_Region);
+                            //sum all values corresponding to the same country - time series
+                            for (int i = 0; i < headerDates.Count; i++)
+                            {
+                                dictCountry[readCountry].timeSeries[i] += Int32.Parse(csv.GetField(headerDates[i]));
+                            }
                         }
                     }
                 }
@@ -133,12 +154,15 @@ namespace DataProcessing {
                         {
                             //sum all values corresponding to the same country
                             dictCountry[str_count].CurrentConfirmedCases += Convert.ToInt32(values);
-
-                            l_output.Add(dictCountry[str_count].Country_Region);
                         }
                     }
                 }
             }
+        }
+
+        public void ReadTimeSeries(StreamReader str)
+        {
+
         }
 
         public static List<string> OrderVal (Dictionary<string, Country> dict,int rank, MyOrderBy by) {

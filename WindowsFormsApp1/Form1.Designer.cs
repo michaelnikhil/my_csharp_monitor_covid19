@@ -32,11 +32,11 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartTimeSeries = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTimeSeries)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -54,7 +54,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(59, 496);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(441, 218);
+            this.dataGridView1.Size = new System.Drawing.Size(486, 218);
             this.dataGridView1.TabIndex = 1;
             // 
             // listBox2
@@ -77,22 +77,22 @@
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
             // 
-            // chart2
+            // chartTimeSeries
             // 
             chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            this.chartTimeSeries.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(59, 287);
-            this.chart2.Name = "chart2";
+            this.chartTimeSeries.Legends.Add(legend2);
+            this.chartTimeSeries.Location = new System.Drawing.Point(59, 287);
+            this.chartTimeSeries.Name = "chartTimeSeries";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
-            this.chart2.Series.Add(series1);
-            this.chart2.Size = new System.Drawing.Size(812, 180);
-            this.chart2.TabIndex = 6;
-            this.chart2.Text = "chart2";
+            this.chartTimeSeries.Series.Add(series1);
+            this.chartTimeSeries.Size = new System.Drawing.Size(812, 180);
+            this.chartTimeSeries.TabIndex = 6;
+            this.chartTimeSeries.Text = "chart2";
             // 
             // comboBox1
             // 
@@ -112,7 +112,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 799);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.chart2);
+            this.Controls.Add(this.chartTimeSeries);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.dataGridView1);
@@ -121,7 +121,7 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartTimeSeries)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -132,7 +132,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartTimeSeries;
         private System.Windows.Forms.ComboBox comboBox1;
     }
 }

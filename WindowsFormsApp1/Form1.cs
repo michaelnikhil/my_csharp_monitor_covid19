@@ -12,12 +12,15 @@ using System.Windows.Forms.DataVisualization.Charting;
 using DataProcessing;
 
 namespace WindowsFormsApp1 {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void button1_Click(object sender, EventArgs e)
+        {
 
 
             //create an instance of the loaddata class and populate it 
@@ -28,27 +31,31 @@ namespace WindowsFormsApp1 {
             int comboBoxChoice = comboBox1.SelectedIndex;
 
             //TODO : fix the method
-            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry,4,(MyOrderBy)comboBoxChoice  );
-               foreach (var item in orderCountries) {
-                   listBox2.Items.Add(item);
-               }
-            drawChart(loader.dictCountry,orderCountries, comboBoxChoice);
-
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry, 4, (MyOrderBy)comboBoxChoice);
+            foreach (var item in loader.l_output)
+            {
+                listBox2.Items.Add(item);
+            }
+            drawChart(loader.dictCountry, orderCountries, comboBoxChoice);
+            drawTimeSeries(loader.dictCountry);
         }
 
-        private LoadData LoadAllData(){
+        private LoadData LoadAllData()
+        {
 
-         //create an instance of the loaddata class
+            //create an instance of the loaddata class
             LoadData loader = new LoadData();
-           
+
             loader.DownloadPopulation();
 
-            if (!loader.success) {
+            if (!loader.success)
+            {
                 MessageBox.Show(loader.output);
             }
 
-           loader.DownloadCovid(MyFileChoice.CurrentDeaths);
-            if (!loader.success) {
+            loader.DownloadCovid(MyFileChoice.CurrentDeaths);
+            if (!loader.success)
+            {
                 MessageBox.Show(loader.output);
             }
 
@@ -78,13 +85,12 @@ namespace WindowsFormsApp1 {
             }
         }
 
-        private void drawChart(Dictionary<string, Country> dict, List<string> listCountries, int comboBoxChoice) {
+        private void drawChart(Dictionary<string, Country> dict, List<string> listCountries, int comboBoxChoice)
+        {
 
             chart1.Series.Clear();
             Series ser1 = new Series();
             chart1.Series.Add(ser1);
-            
-
 
             //TODO : improve the choice (remove switch)
             switch (comboBoxChoice)
@@ -123,8 +129,30 @@ namespace WindowsFormsApp1 {
             }
 
             chart1.ChartAreas[0].RecalculateAxesScale();
-
         }
 
+        private void drawTimeSeries(Dictionary<string, Country> dict)
+        {
+
+            chartTimeSeries.Series.Clear();
+            Series ser1 = new Series();
+            chartTimeSeries.Series.Add(ser1);
+            ser1.Name = "deaths";
+
+            //chartTimeSeries.Series["deaths"].Points.DataBindY(dict["Sweden"].timeSeries);
+
+
+            //FIXME
+            int i = 0;
+            foreach (int item in dict["Afghanistan"].timeSeries)
+            {           
+                chartTimeSeries.Series["deaths"].Points.AddXY(i,item);
+
+                i++;
+            }
+
+
+
+        }
     }
 }
