@@ -118,7 +118,6 @@ namespace DataProcessing {
 
                 //change where the data is sent depending on the file
 
-
                 if (source == MyFileChoice.CurrentDeaths) {
 
                     //initialise the time series for each country

@@ -22,7 +22,6 @@ namespace WindowsFormsApp1 {
         private void button1_Click(object sender, EventArgs e)
         {
 
-
             //create an instance of the loaddata class and populate it 
             LoadData loader = LoadAllData();
 
@@ -37,7 +36,7 @@ namespace WindowsFormsApp1 {
                 listBox2.Items.Add(item);
             }
             drawChart(loader.dictCountry, orderCountries, comboBoxChoice);
-            drawTimeSeries(loader.dictCountry);
+            drawTimeSeries(loader.dictCountry, orderCountries);
         }
 
         private LoadData LoadAllData()
@@ -131,24 +130,25 @@ namespace WindowsFormsApp1 {
             chart1.ChartAreas[0].RecalculateAxesScale();
         }
 
-        private void drawTimeSeries(Dictionary<string, Country> dict)
+        private void drawTimeSeries(Dictionary<string, Country> dict, List<string> listCountries)
         {
 
             chartTimeSeries.Series.Clear();
-            Series ser1 = new Series();
-            chartTimeSeries.Series.Add(ser1);
-            ser1.Name = "deaths";
 
-            //chartTimeSeries.Series["deaths"].Points.DataBindY(dict["Sweden"].timeSeries);
+            foreach (string country in listCountries)
+            {
 
+                Series ser1 = new Series();
+                chartTimeSeries.Series.Add(ser1);
+                ser1.Name = country;
 
-            //FIXME
-            int i = 0;
-            foreach (int item in dict["Afghanistan"].timeSeries)
-            {           
-                chartTimeSeries.Series["deaths"].Points.AddXY(i,item);
-
-                i++;
+                //TODO : FIXME
+                int i = 0;
+                foreach (int item in dict[country].timeSeries)
+                {
+                    chartTimeSeries.Series[country].Points.AddXY(i, item);
+                    i++;
+                }
             }
 
 

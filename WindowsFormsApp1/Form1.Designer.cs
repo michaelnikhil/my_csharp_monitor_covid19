@@ -54,7 +54,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(59, 496);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(486, 218);
+            this.dataGridView1.Size = new System.Drawing.Size(468, 218);
             this.dataGridView1.TabIndex = 1;
             // 
             // listBox2
@@ -86,7 +86,7 @@
             this.chartTimeSeries.Location = new System.Drawing.Point(59, 287);
             this.chartTimeSeries.Name = "chartTimeSeries";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartTimeSeries.Series.Add(series1);
