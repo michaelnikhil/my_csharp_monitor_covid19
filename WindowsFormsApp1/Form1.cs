@@ -40,6 +40,10 @@ namespace WindowsFormsApp1 {
 
             List<DateTime> dates = loader.dates;
             drawTimeSeries(loader.dictCountry, orderCountries, dates);
+
+            textBoxDate.Text = dates.Last().ToShortDateString();
+            textBoxDeath.Text = loader.TotalDeaths().ToString();
+            textBoxCases.Text = loader.TotalCases().ToString();
         }
 
         private LoadData LoadAllData()
@@ -145,7 +149,7 @@ namespace WindowsFormsApp1 {
                 chartTimeSeries.Series.Add(ser1);
                 ser1.Name = country;
 
-                //TODO : add datetimes on X axis
+                //TODO : try not using a foreach to populate the chart
                 // chartTimeSeries.Series[country].Points.DataBindXY(dates,  dict[country].timeSeries);
                 // chartTimeSeries.Series[country].Points.DataBindY(dict[country].timeSeries);
                 // chartTimeSeries.Series[country].ChartType = SeriesChartType.Line;
@@ -156,13 +160,12 @@ namespace WindowsFormsApp1 {
                     chartTimeSeries.Series[country].Points.AddXY(dates[i], value);
                     i++;
                 }
-
-
                 chartTimeSeries.Series[country].ChartType = SeriesChartType.Line;
 
             }
             
         }
+
 
     }
 }

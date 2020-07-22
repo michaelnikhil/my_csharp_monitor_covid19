@@ -39,10 +39,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxDate = new System.Windows.Forms.TextBox();
+            this.textBoxDeath = new System.Windows.Forms.TextBox();
+            this.textBoxCases = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeSeries)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -79,7 +86,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(59, 76);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(812, 209);
+            this.chart1.Size = new System.Drawing.Size(619, 209);
             this.chart1.TabIndex = 5;
             this.chart1.Text = "chart1";
             // 
@@ -89,14 +96,14 @@
             this.chartTimeSeries.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chartTimeSeries.Legends.Add(legend2);
-            this.chartTimeSeries.Location = new System.Drawing.Point(59, 322);
+            this.chartTimeSeries.Location = new System.Drawing.Point(59, 306);
             this.chartTimeSeries.Name = "chartTimeSeries";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartTimeSeries.Series.Add(series1);
-            this.chartTimeSeries.Size = new System.Drawing.Size(812, 180);
+            this.chartTimeSeries.Size = new System.Drawing.Size(619, 180);
             this.chartTimeSeries.TabIndex = 6;
             this.chartTimeSeries.Text = "chart2";
             // 
@@ -170,11 +177,68 @@
             this.label4.TabIndex = 13;
             this.label4.Text = "Nb of countries";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.textBoxDate);
+            this.panel1.Controls.Add(this.textBoxDeath);
+            this.panel1.Controls.Add(this.textBoxCases);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Location = new System.Drawing.Point(702, 76);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 311);
+            this.panel1.TabIndex = 14;
+            // 
+            // textBoxDate
+            // 
+            this.textBoxDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDate.Location = new System.Drawing.Point(28, 18);
+            this.textBoxDate.Name = "textBoxDate";
+            this.textBoxDate.Size = new System.Drawing.Size(167, 13);
+            this.textBoxDate.TabIndex = 4;
+            // 
+            // textBoxDeath
+            // 
+            this.textBoxDeath.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDeath.Location = new System.Drawing.Point(95, 128);
+            this.textBoxDeath.Name = "textBoxDeath";
+            this.textBoxDeath.ReadOnly = true;
+            this.textBoxDeath.Size = new System.Drawing.Size(100, 13);
+            this.textBoxDeath.TabIndex = 3;
+            // 
+            // textBoxCases
+            // 
+            this.textBoxCases.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxCases.Location = new System.Drawing.Point(95, 64);
+            this.textBoxCases.Name = "textBoxCases";
+            this.textBoxCases.ReadOnly = true;
+            this.textBoxCases.Size = new System.Drawing.Size(100, 13);
+            this.textBoxCases.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 131);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Total Deaths";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 64);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Total Cases";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 799);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numericUpDown);
             this.Controls.Add(this.label3);
@@ -192,6 +256,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTimeSeries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,6 +276,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBoxDate;
+        private System.Windows.Forms.TextBox textBoxDeath;
+        private System.Windows.Forms.TextBox textBoxCases;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
 

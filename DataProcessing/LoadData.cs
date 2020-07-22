@@ -159,11 +159,6 @@ namespace DataProcessing {
             }
         }
 
-        public void ReadTimeSeries(StreamReader str)
-        {
-
-        }
-
         public static List<string> OrderVal (Dictionary<string, Country> dict,int rank, MyOrderBy by) {
             List<string> orderedList = new List<string> { };
             switch (by) {
@@ -189,6 +184,26 @@ namespace DataProcessing {
             }
             return orderedList;
         }
+
+        public int TotalCases()
+        {
+            int sum = 0;
+            foreach (string country in dictCountry.Keys)
+            {
+                sum += dictCountry[country].CurrentConfirmedCases;
+            }
+            return sum;
+        }
+
+        public int TotalDeaths()
+        {
+            int sum = 0;
+            foreach (string country in dictCountry.Keys)
+            {
+                sum += dictCountry[country].CurrentDeaths;
+            }
+            return sum;
+        }
     }
 
     public enum MyFileChoice
@@ -196,4 +211,6 @@ namespace DataProcessing {
         CurrentConfirmedCases,
         CurrentDeaths
     }
+
+
 }
