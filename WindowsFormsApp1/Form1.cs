@@ -28,8 +28,10 @@ namespace WindowsFormsApp1 {
 
             int comboBoxChoice = comboBox1.SelectedIndex;
 
+            int selectNumber = (int)numericUpDown.Value;
+
             //TODO : fix the method
-            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry, 4, (MyOrderBy)comboBoxChoice);
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry, selectNumber, (MyOrderBy)comboBoxChoice);
             foreach (var item in loader.l_output)
             {
                 listBox2.Items.Add(item);
