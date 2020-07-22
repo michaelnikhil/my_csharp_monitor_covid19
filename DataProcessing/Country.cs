@@ -14,8 +14,6 @@ namespace DataProcessing {
         public int CurrentDeaths { get; set; }
         public List<int> timeSeries;
 
-        public void Nvalues() { }
-
     }
 
     public enum MyOrderBy {
