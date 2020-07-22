@@ -73,7 +73,7 @@
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(672, 517);
+            this.listBox2.Location = new System.Drawing.Point(557, 524);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(141, 225);
             this.listBox2.TabIndex = 3;
@@ -96,7 +96,7 @@
             this.chartTimeSeries.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chartTimeSeries.Legends.Add(legend2);
-            this.chartTimeSeries.Location = new System.Drawing.Point(59, 306);
+            this.chartTimeSeries.Location = new System.Drawing.Point(59, 331);
             this.chartTimeSeries.Name = "chartTimeSeries";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
@@ -131,7 +131,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(391, 306);
+            this.label2.Location = new System.Drawing.Point(391, 304);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(105, 13);
             this.label2.TabIndex = 10;
@@ -200,7 +200,7 @@
             // textBoxDeath
             // 
             this.textBoxDeath.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxDeath.Location = new System.Drawing.Point(95, 128);
+            this.textBoxDeath.Location = new System.Drawing.Point(96, 130);
             this.textBoxDeath.Name = "textBoxDeath";
             this.textBoxDeath.ReadOnly = true;
             this.textBoxDeath.Size = new System.Drawing.Size(100, 13);
@@ -209,7 +209,7 @@
             // textBoxCases
             // 
             this.textBoxCases.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxCases.Location = new System.Drawing.Point(95, 64);
+            this.textBoxCases.Location = new System.Drawing.Point(95, 63);
             this.textBoxCases.Name = "textBoxCases";
             this.textBoxCases.ReadOnly = true;
             this.textBoxCases.Size = new System.Drawing.Size(100, 13);
