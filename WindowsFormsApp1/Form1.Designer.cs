@@ -123,9 +123,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(391, 306);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.Size = new System.Drawing.Size(105, 13);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Time Series";
+            this.label2.Text = "Time Series - Deaths";
             // 
             // label3
             // 

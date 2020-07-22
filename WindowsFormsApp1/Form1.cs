@@ -35,7 +35,9 @@ namespace WindowsFormsApp1 {
                 listBox2.Items.Add(item);
             }
             drawChart(loader.dictCountry, orderCountries, comboBoxChoice);
-            drawTimeSeries(loader.dictCountry, orderCountries);
+
+            List<DateTime> dates = loader.dates;
+            drawTimeSeries(loader.dictCountry, orderCountries, dates);
         }
 
         private LoadData LoadAllData()
@@ -129,28 +131,35 @@ namespace WindowsFormsApp1 {
             chart1.ChartAreas[0].RecalculateAxesScale();
         }
 
-        private void drawTimeSeries(Dictionary<string, Country> dict, List<string> listCountries)
+        private void drawTimeSeries(Dictionary<string, Country> dict, List<string> listCountries, List<DateTime> dates)
         {
 
             chartTimeSeries.Series.Clear();
-
+            
             foreach (string country in listCountries)
             {
-
+                
                 Series ser1 = new Series();
                 chartTimeSeries.Series.Add(ser1);
                 ser1.Name = country;
 
-                chartTimeSeries.Series[country].Points.DataBindY(dict[country].timeSeries);
+                //TODO : add datetimes on X axis
+                // chartTimeSeries.Series[country].Points.DataBindXY(dates,  dict[country].timeSeries);
+                // chartTimeSeries.Series[country].Points.DataBindY(dict[country].timeSeries);
+                // chartTimeSeries.Series[country].ChartType = SeriesChartType.Line;
+
+                int i=0;
+                foreach (int value in dict[country].timeSeries)
+                {
+                    chartTimeSeries.Series[country].Points.AddXY(dates[i], value);
+                    i++;
+                }
+
+
                 chartTimeSeries.Series[country].ChartType = SeriesChartType.Line;
-                //TODO : FIXME
-                /* int i = 0;
-                 foreach (int item in dict[country].timeSeries)
-                 {
-                     chartTimeSeries.Series[country].Points.AddXY(i, item);
-                     i++;
-                 }*/
+
             }
+            
         }
 
     }
