@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace WebApplication1
 {
     public class Startup
@@ -24,6 +25,8 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMvc();
+            services.AddControllers(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +42,16 @@ namespace WebApplication1
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "myRoute",
+                    template: "home/index");
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -52,6 +65,7 @@ namespace WebApplication1
                     name: "default",
                     pattern: "{controller=Home}/{action=BarChart}/{id?}");
             });
+
         }
     }
 }

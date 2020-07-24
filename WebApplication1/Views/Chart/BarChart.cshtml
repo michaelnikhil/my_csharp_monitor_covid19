@@ -1,13 +1,25 @@
-﻿
-@{
-    var myChart = new System.Web.Helpers.Chart(width: 600, height: 400)
-        .AddTitle("Chart Title")
-        .AddSeries(
-            name: "Employee",
-            xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
-            yValues: new[] { "2", "6", "4", "5", "3" })
-        .Write();
+﻿<div class="container">
+    <div id="chart1"></div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            $.get('JsonData', function (jsonData) {
+                data = google.visualization.arrayToDataTable(jsonData, false);
+                var option = {
+                    title: "Line Chart",
+                    width: 1200,
+                    height: 400
+                };
+                chart = new google.visualization.LineChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
 }
-
-<h1>BarChart</h1>
-
