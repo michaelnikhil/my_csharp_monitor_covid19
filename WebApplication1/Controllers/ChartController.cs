@@ -16,8 +16,7 @@ namespace WebApplication1.Controllers
 
         public JsonResult JsonData()
         {
-            //var data = SummaryData.MultiLineData();
-            var data = SummaryData.MultiLineData();
+            var data = SummaryData.TimeSeries();
             return Json(data);
         }
 

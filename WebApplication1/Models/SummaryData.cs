@@ -24,7 +24,7 @@ namespace WebApplication1.Models
             }
         };
 
-        public static List<object> MultiLineData()
+        public static List<object> TimeSeries()
         {
             List<object> objs = new List<object>();
             
@@ -38,46 +38,30 @@ namespace WebApplication1.Models
             List<string> orderCountries = LoadData.OrderVal(loader.dictCountry, rank, MyOrderBy.CurrentDeaths);
 
             //build the sample datatable
-            DataTable table = new DataTable();
+
+            object[] header = new object[rank + 1];
 
             //create columns
-            table.Columns.Add("date", typeof(DateTime));
-            foreach ( string country in orderCountries)
+            header[0] = "date";
+            for (int i = 0; i < orderCountries.Count; i++)
             {
-                table.Columns.Add(country, typeof(int));
+                header[i+1] = orderCountries[i];
             }
+            objs.Add(header);
 
             //populate the datatable
-           /* for (int i = 0; i < loader.dates.Count; i++)
-            {
-                table.Rows.Add(25, "Indocin", "David", DateTime.Now);
-
-                foreach (var item in collection)
-                {
-
-                }
-                objs.Add(new object[] { loader.dates[i], loader.dictCountry["France"].timeSeries[i], loader.dictCountry["Italy"].timeSeries[i] });
-
-            }*/
-
-            objs.Add(new[] { "dates","France", "Italy" });
-
-
-
             for (int i = 0; i < loader.dates.Count; i++)
             {
-                objs.Add(new object[] {loader.dates[i], loader.dictCountry["France"].timeSeries[i], loader.dictCountry["Italy"].timeSeries[i] });
-
+                //TODO : dispose objects
+                object[] array = new object[rank + 1];
+                array[0] = loader.dates[i];
+                for (int j = 0; j < rank; j++)
+                {
+                    array[j + 1] = loader.dictCountry[orderCountries[j]].timeSeries[i];
+                }
+                objs.Add(array);
             }
 
-            //objs.Add()
-            /*
-            objs.Add(new[] { "x", "sin(x)", "cos(x)", "sin(x)^2" });
-            for (int i = 0; i < 70; i++)
-            {
-                double x = 0.1 * i;
-                objs.Add(new[] { x, Math.Sin(x), Math.Cos(x), Math.Sin(x) * Math.Sin(x) });
-            }*/
             return objs;
         }
 
