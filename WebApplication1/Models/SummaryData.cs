@@ -24,15 +24,35 @@ namespace WebApplication1.Models
             }
         };
 
+        private static LoadData LoadAllData()
+        {
+            //create an instance of the loaddata class and download all the data
+            LoadData loader = new LoadData();
+            loader.DownloadPopulation();
+            loader.DownloadCovid(MyFileChoice.CurrentDeaths);
+            loader.DownloadCovid(MyFileChoice.CurrentConfirmedCases);
+            loader.DownloadPopulation();
+            return loader;
+        }
+
         public static List<object> KeyIndicators()
         {
+            //create an instance of the loaddata class and download all the data
+            LoadData loader = LoadAllData();
+
+            //order the countries
+            int rank = 10;
+            List<string> orderCountries = LoadData.OrderVal(loader.dictCountry, rank, MyOrderBy.CurrentDeaths);
+
             List<object> objs = new List<object>();
-            objs.Add(new object[] { "Year", "Asia" });
-            objs.Add(new object[] { "2012", 1000 });
-            objs.Add(new object[] { "2013", 1170 });
-            objs.Add(new object[] { "2014", 1250 });
-            objs.Add(new object[] { "2015", 900 });
-            objs.Add(new object[] { "2016", 1530 });
+            objs.Add(new object[] { "Country", "Deaths" });
+
+            //populate the datatable
+
+            foreach (string country in orderCountries)
+            {
+                objs.Add(new object[] { country, loader.dictCountry[country].CurrentDeaths });
+            }
 
             return objs;
         }
@@ -42,9 +62,8 @@ namespace WebApplication1.Models
             List<object> objs = new List<object>();
             
             //create an instance of the loaddata class and download all the data
-            LoadData loader = new LoadData();
-            loader.DownloadPopulation();
-            loader.DownloadCovid(MyFileChoice.CurrentDeaths);
+            LoadData loader = LoadAllData();
+
 
             //order the countries
             int rank = 4;
