@@ -24,6 +24,19 @@ namespace WebApplication1.Models
             }
         };
 
+        public static List<object> KeyIndicators()
+        {
+            List<object> objs = new List<object>();
+            objs.Add(new object[] { "Year", "Asia" });
+            objs.Add(new object[] { "2012", 1000 });
+            objs.Add(new object[] { "2013", 1170 });
+            objs.Add(new object[] { "2014", 1250 });
+            objs.Add(new object[] { "2015", 900 });
+            objs.Add(new object[] { "2016", 1530 });
+
+            return objs;
+        }
+
         public static List<object> TimeSeries()
         {
             List<object> objs = new List<object>();

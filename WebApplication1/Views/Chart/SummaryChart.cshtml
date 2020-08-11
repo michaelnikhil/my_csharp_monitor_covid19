@@ -17,22 +17,18 @@
         </div>
         <script language="JavaScript">
             function drawChart() {
-                // Define the chart to be drawn.
-                var data = google.visualization.arrayToDataTable([
-                    ['Year', 'Asia'],
-                    ['2012', 900],
-                    ['2013', 1000],
-                    ['2014', 1170],
-                    ['2015', 1250],
-                    ['2016', 1530]
-                ]);
+                $.get('SummaryJsonData', function (jsonData) {
+                    // Define the chart to be drawn.
+                    var data = google.visualization.arrayToDataTable(jsonData,false);
 
-                var options = { title: 'Population (in millions)' };
+                    var options = { title: 'Population (in millions)' };
 
-                // Instantiate and draw the chart.
-                var chart = new google.visualization.BarChart(document.getElementById('chart1'));
-                chart.draw(data, options);
+                    // Instantiate and draw the chart.
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart1'));
+                    chart.draw(data, options);
+                })
             }
+
             google.charts.setOnLoadCallback(drawChart);
         </script>
   }

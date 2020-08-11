@@ -19,9 +19,15 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public JsonResult JsonData()
+        public JsonResult TimeSeriesJsonData()
         {
             var data = SummaryData.TimeSeries();
+            return Json(data);
+        }
+
+        public JsonResult SummaryJsonData()
+        {
+            var data = SummaryData.KeyIndicators();
             return Json(data);
         }
 

@@ -10,7 +10,7 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            $.get('JsonData', function (jsonData) {
+            $.get('TimeSeriesJsonData', function (jsonData) {
                 data = google.visualization.arrayToDataTable(jsonData, false);
                 var option = {
                     title: "Time series",
