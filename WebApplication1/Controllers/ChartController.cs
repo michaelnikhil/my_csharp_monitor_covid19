@@ -14,6 +14,11 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public IActionResult SummaryChart()
+        {
+            return View();
+        }
+
         public JsonResult JsonData()
         {
             var data = SummaryData.TimeSeries();
