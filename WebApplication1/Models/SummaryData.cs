@@ -9,20 +9,7 @@ namespace WebApplication1.Models
 {
     public class SummaryData
     {
-        public static readonly IEnumerable<DataProcessing.Country> CountryData = new[] {
-            new Country {
-                Country_Region = "France",
-                Population = "10"
-            },
-            new Country {
-                Country_Region = "Sweden",
-                Population = "15"
-            },
-            new Country {
-                Country_Region = "Belgium",
-                Population = "8"
-            }
-        };
+
 
         private static LoadData LoadAllData()
         {
