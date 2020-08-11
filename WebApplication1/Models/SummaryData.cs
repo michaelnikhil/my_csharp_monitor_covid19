@@ -10,19 +10,18 @@ namespace WebApplication1.Models
     public class SummaryData
     {
 
-
         private static LoadData LoadAllData()
         {
             //create an instance of the loaddata class and download all the data
             LoadData loader = new LoadData();
             loader.DownloadPopulation();
             loader.DownloadCovid(MyFileChoice.CurrentDeaths);
-            loader.DownloadCovid(MyFileChoice.CurrentConfirmedCases);
+            //loader.DownloadCovid(MyFileChoice.CurrentConfirmedCases);
             loader.DownloadPopulation();
             return loader;
         }
 
-        public static List<object> KeyIndicators()
+        public static List<object> KeyIndicatorCurrentDeaths()
         {
             //create an instance of the loaddata class and download all the data
             LoadData loader = LoadAllData();

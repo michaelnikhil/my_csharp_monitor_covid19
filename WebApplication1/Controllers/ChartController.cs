@@ -25,9 +25,9 @@ namespace WebApplication1.Controllers
             return Json(data);
         }
 
-        public JsonResult SummaryJsonData()
+        public JsonResult CurrentDeathsJsonData()
         {
-            var data = SummaryData.KeyIndicators();
+            var data = SummaryData.KeyIndicatorCurrentDeaths();
             return Json(data);
         }
 

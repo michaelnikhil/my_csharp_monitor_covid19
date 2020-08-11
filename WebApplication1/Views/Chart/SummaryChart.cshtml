@@ -1,9 +1,24 @@
 ﻿<h1>SummaryChart</h1>
 
 
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Order by
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Population</a>
+        <a class="dropdown-item" href="#">Current Deaths</a>
+        <a class="dropdown-item" href="#">Confirmed Cases</a>
+    </div>
+</div>
+
 <div class="container">
     <div id="chart1"></div>
 </div>
+
+
+
 
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
@@ -17,7 +32,7 @@
         </div>
         <script language="JavaScript">
             function drawChart() {
-                $.get('SummaryJsonData', function (jsonData) {
+                $.get('CurrentDeathsJsonData', function (jsonData) {
                     // Define the chart to be drawn.
                     var data = google.visualization.arrayToDataTable(jsonData,false);
 
